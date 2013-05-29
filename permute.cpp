@@ -1,6 +1,37 @@
 #include <iostream>
 
+#define BUFF_MEM_SIZE 4096
+
 using namespace std;
+
+class Buffer : string {
+    char *str;
+    int length;
+public:
+    Buffer() {
+        str = (char *)malloc(BUFF_MEM_SIZE);
+        str[0] = '\0';
+        length = 0;
+    }
+    void append(const char * a) {
+        strcpy(str + strlen(str), a);
+        length += strlen(a);
+        str[length] = '\0';
+    }
+    void append(const char c) {
+        str[length++] = c;
+        str[length] = '\0';
+    }
+    void chop() {
+        str[--length] = '\0';
+    }
+    friend ostream& operator<<(ostream &os, const Buffer *buffer);
+};
+
+ostream& operator<<(ostream &os, const Buffer *buffer) {
+    os << buffer->str;
+    return os;
+}
 
 class PermuteString {
     char *str;
@@ -9,19 +40,18 @@ class PermuteString {
         str[p1] = str[p2];
         str[p2] = t;
     }
-    void doPermute(char *out, bool *used, int level) {
+    void doPermute(Buffer *out, bool *used, int level) {
         if (level == strlen(str)) {
             cout << out << endl;
             return;
         }
         for (int i = 0; i < strlen(str); i++) {
             if (used[i]) continue;
-            out[strlen(out)] = str[i];
-            out[strlen(out) + 1] = '\0';
+            out->append(str[i]);
             used[i] = true;
             doPermute(out, used, level + 1);
             used[i] = false;
-            out[strlen(out) - 1] = '\0';
+            out->chop();
         }
     }
 public:
@@ -31,8 +61,7 @@ public:
     }
     void permute() {
         bool *used = new bool[strlen(str)];
-        char *buff = new char[strlen(str)];
-        doPermute(buff, used, 0);
+        doPermute(new Buffer(), used, 0);
     }
 };
 
