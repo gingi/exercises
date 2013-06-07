@@ -1,6 +1,10 @@
-CXX = g++
+CC = g++
 
-permute: permute.cpp
+programs = permute mergedisjoint arrayclass
+
+all: $(programs)
+
+$(programs): %: %.o
 
 clean:
-	rm -f permute *.o
+	rm -f $(programs) *.o

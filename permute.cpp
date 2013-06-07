@@ -65,17 +65,15 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     PermuteString *p;
     if (argc < 2) {
-        cerr << "Usage: permute <string>" << endl;
-        exit(1);
+        (new PermuteString("AB"))->permute();
+        (new PermuteString("ABC"))->permute();
+        (new PermuteString("ABCD"))->permute();
+    } else {
+        p = new PermuteString(argv[1]);
+        p->permute();
     }
-    // (new PermuteString("AB"))->permute();
-    // (new PermuteString("ABC"))->permute();
-    // (new PermuteString("ABCD"))->permute();
-    p = new PermuteString(argv[1]);
-    p->permute();
     return 0;
 }

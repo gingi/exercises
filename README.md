@@ -1,4 +1,3 @@
-Permute
-=======
+##Exercises
 
-Show all permutations of a string.
+Just some coding exercises in C++.
