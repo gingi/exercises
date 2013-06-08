@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 class Array {
     int data[2];
 public:
