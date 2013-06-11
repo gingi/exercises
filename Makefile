@@ -1,6 +1,6 @@
 CC = g++
 
-programs = permute mergedisjoint arrayclass
+programs = permute mergedisjoint arrayclass funcptr
 
 all: $(programs)
 
