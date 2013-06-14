@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 // Simple demonstration of C/C++ function pointers.
 void call(int n, int (*fp)(int)) {
     printf("fn(%d) -> %d\n", n, fp(n));
