@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 
 using namespace std;
 
@@ -6,35 +7,36 @@ class Node {
 public:
     Node(char _c = '\0') {
         c = _c;
-        lNode  = NULL;
-        rNode = NULL;
+        leftChild  = NULL;
+        rightChild = NULL;
     }
     virtual ~Node() {}
     Node * left(Node * n) {
-        lNode = n;
+        leftChild = n;
         return this;
     }
     Node * right(Node * n) {
-        rNode = n;
+        rightChild = n;
         return this;
     }
-    void printBF() {
-        cout << c;
-        print_r(this);
+    void bft() {
+        queue<Node *> * q = new queue<Node *>;
+        q->push(this);
+        while (!q->empty()) {
+            Node * n = q->front();
+            q->pop();
+            if (n->leftChild)  q->push(n->leftChild);
+            if (n->rightChild) q->push(n->rightChild);
+            cout << n->c;
+        }
         cout << endl;
     }
 
 private:
     char c;
-    Node * lNode, * rNode;
-    static void print_r(Node * n) {
-        if (n == NULL) return;
-        if (n->lNode != NULL) cout << n->lNode->c;
-        if (n->rNode != NULL) cout << n->rNode->c;
-        print_r(n->lNode);
-        print_r(n->rNode);
-    }
+    Node * leftChild, * rightChild;
 };
+
 int main(int argc, char const *argv[]) {
     Node * a = new Node('a');
     Node * b = new Node('b');
@@ -43,10 +45,27 @@ int main(int argc, char const *argv[]) {
     Node * e = new Node('e');
     Node * f = new Node('f');
     Node * g = new Node('g');
+    Node * h = new Node('h');
+    Node * i = new Node('i');
+    Node * j = new Node('j');
     
+    /*
+     *                 a
+     *              /     \
+     *            b         c
+     *          /   \     /   \
+     *         d     e   f     g
+     *          \   /
+     *           h i
+     *          /
+     *         j
+     */        
     a->left(b)->right(c);
     b->left(d)->right(e);
     c->left(f)->right(g);
-    a->printBF();
+    d->right(h);
+    e->left(i);
+    h->left(j);
+    a->bft();
     return 0;
 }
